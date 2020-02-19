@@ -84,27 +84,15 @@ func (this *Heap) Top() int {
 
 func main() {
 	heap := Heap{0, make([]int, 1)}
-	heap.Push(6)
+	heap.Push(100)
 	fmt.Println("heap=", heap)
-	heap.Push(5)
 
+	heap.Push(16)
 	fmt.Println("heap=", heap)
+
 	heap.Push(4)
-
-	fmt.Println("heap=", heap)
-	heap.Push(3)
-
-	fmt.Println("heap=", heap)
-	heap.Push(2)
-
-	fmt.Println("heap=", heap)
-	heap.Push(1)
-
 	fmt.Println("heap=", heap)
 
-	heap.Pop()
-	fmt.Println("pop =", heap)
-
-	heap.Pop()
-	fmt.Println("pop =", heap)
+	heap.Push(8)
+	fmt.Println("heap=", heap)
 }
