@@ -12,6 +12,55 @@ type CalNode struct {
 }
 type CalList []CalNode
 
+type Stack []int
+
+func (s *Stack) Push(n int) { *s = append(*s, n) }
+func (s *Stack) Pop() int {
+	l := len(*s)
+	v := (*s)[l-1]
+	*s = (*s)[:l-1]
+	return v
+}
+func calculate2(s string) int {
+	tmp := 0
+	stack := make(Stack, 0)
+	var lastOp byte = '+'
+	s += "+0"
+	length := len(s)
+	for i := 0; i < length; i++ {
+		if s[i] >= '0' && s[i] <= '9' {
+			tmp = 10*tmp + int(s[i]-'0')
+			continue
+		} else if s[i] == ' ' {
+			continue
+		}
+		switch lastOp {
+		case '+':
+			stack.Push(tmp)
+			break
+		case '-':
+			stack.Push(tmp * -1)
+			break
+		case '*':
+			tmp = stack.Pop() * tmp
+			stack.Push(tmp)
+			break
+		case '/':
+			tmp = stack.Pop() / tmp
+			stack.Push(tmp)
+			break
+
+		}
+		lastOp, tmp = s[i], 0
+	}
+
+	ret := 0
+	for len(stack) > 0 {
+		ret = ret + stack.Pop()
+	}
+	return ret
+}
+
 func calculate(s string) int {
 	tmp := -1
 	list := make(CalList, 0)
@@ -96,6 +145,10 @@ func main() {
 	start := time.Now()
 	ret := calculate("100-234+234*234-234*123+34/412-123556*234+234/3")
 	cost := time.Since(start)
+	fmt.Println("计算结果:", ret, ",耗时:", cost)
+	start = time.Now()
+	ret = calculate2("100-234+234*234-234*123+34/412-123556*234+234/3")
+	cost = time.Since(start)
 	fmt.Println("计算结果:", ret, ",耗时:", cost)
 	start = time.Now()
 	ret = 100 - 234 + 234*234 - 234*123 + 34/412 - 123556*234 + 234/3
