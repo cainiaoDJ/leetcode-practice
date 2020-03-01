@@ -140,3 +140,5 @@ Temporary Items
 .idea/php.xml
 .idea/thriftCompiler.xml
 .idea/vcs.xml
+*.s
+*.o
